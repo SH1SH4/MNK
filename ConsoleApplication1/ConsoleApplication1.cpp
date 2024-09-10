@@ -72,7 +72,7 @@ int main()
     double c[5][5];
     double x[5], y[5];
     double b[5];
-    double d[5];
+    double d[6];
     double **matrix = new double *[5];
     for (int i = 0; i < 5; i++)
         matrix[i] = new double[5];
@@ -93,13 +93,13 @@ int main()
     }
     for (int i = 0; i < 5; i++)
         b[i] = sum_b(x, y, i);
-    for (int i = -1; i < 5; i++) {
-        temp_matrix(matrix, c, b, i);
-        d[i + 1] = det(matrix);
+    for (int i = 0; i < 6; i++) {
+        temp_matrix(matrix, c, b, (i - 1));
+        d[i] = det(matrix);
         clear_matrix(matrix);
     }
-    for (int i = 0; i < 5; i++) {
-        std::cout << d[i + 1]/d[0] << " ";
+    for (int i = 1; i < 6; i++) {
+        std::cout << d[i]/d[0] << " ";
     }
     return 0;
 }
