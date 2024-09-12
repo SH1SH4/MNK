@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <cmath>
 
 //вывод элементов матрицы
 void print(double a[5][5]) {
@@ -69,20 +70,22 @@ double det(double **a) {
 
 int main()
 {
+    setlocale(LC_ALL, "Russian");
     double c[5][5];
     double x[5], y[5];
     double b[5];
     double d[6];
     double **matrix = new double *[5];
+    double temp;
+    double eps = 1e-2;
+    bool f = 0;
     for (int i = 0; i < 5; i++)
         matrix[i] = new double[5];
     clear_matrix(matrix);
 
+    std::cout << "Введите 5 пар значений x y" << std::endl;
     for (int i = 0; i < 5; i++) {
-        std::cin >> x[i];
-    }
-    for (int i = 0; i < 5; i++) {
-        std::cin >> y[i];
+        std::cin >> x[i] >> y[i];
     }
     std::cout << std::endl;
 
@@ -96,10 +99,20 @@ int main()
     for (int i = 0; i < 6; i++) {
         temp_matrix(matrix, c, b, (i - 1));
         d[i] = det(matrix);
-        clear_matrix(matrix);
     }
     for (int i = 1; i < 6; i++) {
-        std::cout << d[i]/d[0] << " ";
+        temp = d[i] / d[0];
+        if (eps > abs(temp))
+            continue;
+        else if (f) {
+            if (temp > 0)
+                std::cout << "+ ";
+            else
+                std::cout << "- ";
+        }
+        else
+            f = 1;
+        std::cout << abs(temp) << "x^" << i << " ";
     }
     return 0;
 }
